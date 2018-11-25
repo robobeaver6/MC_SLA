@@ -1,3 +1,5 @@
+#!/bin/bash/python3
+
 import socket
 import time
 import datetime
@@ -24,10 +26,9 @@ def poll_loop(counter, mcast_grp, mcast_port, ttl, padding):
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
     sock.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, ttl)
-    now = datetime.datetime.utcnow().isoformat()
     padding = base64.b64encode(os.urandom(padding)).decode('utf-8')[:padding]
+    now = datetime.datetime.utcnow().isoformat()
     data = json.dumps([counter, now, padding])
-
     sock.sendto(data.encode('utf-8'), (mcast_grp, mcast_port))
     print(data)
 
@@ -41,7 +42,7 @@ def main():
             counter +=1
             time.sleep(1/args.freq)
         except KeyboardInterrupt:
-            print("Exited")
+            print("\n\nExited\n")
             exit()
 
 if __name__ == "__main__":

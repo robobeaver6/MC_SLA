@@ -1,3 +1,5 @@
+#!/bin/bash/python3
+
 import socket
 import struct
 import argparse
