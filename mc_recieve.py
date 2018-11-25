@@ -95,10 +95,7 @@ def mc_listen(mc_group, mc_port):
             exit()
 
 
-def print_result(counter, timestamp, received, dropped):
-
-    # print('{} - Time Sent:{} - Pad Length: {} - Latency: {}'.format(counter, timestamp, len(padding), seconds),
-    #       end='\r')
+def print_result(counter, timestamp, received, dropped)
     if args.long:
         print('{} - Last Timestamp:{} - Recieved: {} - Dropped: {} - Latency: {}'.format(counter,
                                                                                          timestamp,
