@@ -3,11 +3,11 @@
 import socket
 import time
 import datetime
-import random
 import argparse
 import json
 import os
 import base64
+
 
 def get_args():
     parser = argparse.ArgumentParser(description='Test Multicast Stream')
@@ -20,10 +20,6 @@ def get_args():
 
 
 def poll_loop(counter, mcast_grp, mcast_port, ttl, padding):
-    # mcast_grp = '224.1.1.1'
-    # mcast_port = 5000
-    # MULTICAST_TTL = 32
-
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
     sock.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, ttl)
     padding = base64.b64encode(os.urandom(padding)).decode('utf-8')[:padding]
@@ -44,6 +40,7 @@ def main():
         except KeyboardInterrupt:
             print("\n\nExited\n")
             exit()
+
 
 if __name__ == "__main__":
     main()

@@ -5,7 +5,6 @@ import struct
 import argparse
 import datetime
 import json
-import time
 
 
 class Latency(object):
@@ -113,10 +112,10 @@ def print_result(counter, timestamp, received, dropped):
               end='\r')
 
 
-def compare_time(time_recieved):
-    time_difference = datetime.datetime.now() - datetime.datetime.fromisoformat(time_recieved)
+def compare_time(time_received):
+    time_difference = datetime.datetime.now() - datetime.datetime.fromisoformat(time_received)
     # print(time_difference)
-    # return latency in miliseconds
+    # return latency in milliseconds
     return time_difference.microseconds / 1000
 
 
@@ -128,11 +127,11 @@ def exiting(received, dropped):
           'Latency Average: {:.3f}ms\n'
           'Latency Max    : {}ms\n'
           'Jitter         : {:.3f}ms'.format(received,
-                                         dropped,
-                                         latency.low,
-                                         latency.average,
-                                         latency.high,
-                                         latency.high - latency.low))
+                                             dropped,
+                                             latency.low,
+                                             latency.average,
+                                             latency.high,
+                                             latency.high - latency.low))
 
 
 def main():
