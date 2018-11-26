@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python
 
 from __future__ import print_function
 import socket
@@ -7,6 +7,7 @@ import datetime
 import argparse
 import json
 import os
+import sys
 import base64
 
 
@@ -28,6 +29,7 @@ def poll_loop(counter, mcast_grp, mcast_port, ttl, padding):
     data = json.dumps([counter, now, padding])
     sock.sendto(data.encode('utf-8'), (mcast_grp, mcast_port))
     print(data, end='\r')
+    sys.stdout.flush()
 
 
 def main():
