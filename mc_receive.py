@@ -93,7 +93,7 @@ def mc_listen(mc_group, mc_port):
                     print_result(data[0], data[1], total_received, total_dropped)
                 last_counter = data[0]
         except socket.timeout:
-            print('No Data Recieved on {}:{} - {}'.format(args.group, args.port, datetime.datetime.now().isoformat()))
+            print('No Data Recieved on {}:{} - {}'.format(args.group, args.port, time.asctime(time.time())))
         except KeyboardInterrupt:
             exiting(total_received, total_dropped)
             exit()
@@ -102,13 +102,13 @@ def mc_listen(mc_group, mc_port):
 def print_result(counter, timestamp, received, dropped):
     human_time = time.asctime(time.gmtime(timestamp))
     if args.long:
-        print('{} - Last Timestamp:{} - Recieved: {} - Dropped: {} - Latency: {:.3f}'.format(counter,
+        print('{0} - Last Timestamp:{1} - Recieved: {2} - Dropped: {3} - Latency: {4:.3f}'.format(counter,
                                                                                          human_time,
                                                                                          received,
                                                                                          dropped,
                                                                                          latency.last_reading))
     else:
-        print('{} - Last Timestamp:{} - Recieved: {} - Dropped: {} - Latency: {:.3f}'.format(counter,
+        print('{1} - Last Timestamp:{1} - Recieved: {2} - Dropped: {3} - Latency: {4:.3f}'.format(counter,
                                                                                          human_time,
                                                                                          received,
                                                                                          dropped,
@@ -128,12 +128,12 @@ def compare_time(time_sent):
 
 def exiting(received, dropped):
     print('Exiting.  \n'
-          'Recieved       : {} Packets\n'
-          'Dropped        : {} Packets\n'
-          'Latency Min    : {:.3f}ms\n'
-          'Latency Average: {:.3f}ms\n'
-          'Latency Max    : {:.3f}ms\n'
-          'Jitter         : {:.3f}ms'.format(received,
+          'Recieved       : {0} Packets\n'
+          'Dropped        : {1} Packets\n'
+          'Latency Min    : {2:.3f}ms\n'
+          'Latency Average: {3:.3f}ms\n'
+          'Latency Max    : {4:.3f}ms\n'
+          'Jitter         : {5:.3f}ms'.format(received,
                                              dropped,
                                              latency.low,
                                              latency.average,
