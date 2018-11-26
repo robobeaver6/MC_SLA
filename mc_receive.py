@@ -1,10 +1,13 @@
-#!/usr/bin/python3
+#!/usr/bin/python
 
+from __future__ import print_function
 import socket
 import struct
 import argparse
 import datetime
+import time
 import json
+import sys
 
 
 class Latency(object):
@@ -97,35 +100,39 @@ def mc_listen(mc_group, mc_port):
 
 
 def print_result(counter, timestamp, received, dropped):
+    human_time = time.asctime(time.gmtime(timestamp))
     if args.long:
-        print('{} - Last Timestamp:{} - Recieved: {} - Dropped: {} - Latency: {}'.format(counter,
-                                                                                         timestamp,
+        print('{} - Last Timestamp:{} - Recieved: {} - Dropped: {} - Latency: {:.3f}'.format(counter,
+                                                                                         human_time,
                                                                                          received,
                                                                                          dropped,
                                                                                          latency.last_reading))
     else:
-        print('{} - Last Timestamp:{} - Recieved: {} - Dropped: {} - Latency: {}'.format(counter,
-                                                                                         timestamp,
+        print('{} - Last Timestamp:{} - Recieved: {} - Dropped: {} - Latency: {:.3f}'.format(counter,
+                                                                                         human_time,
                                                                                          received,
                                                                                          dropped,
                                                                                          latency.last_reading),
               end='\r')
+        sys.stdout.flush()
 
 
-def compare_time(time_received):
-    time_difference = datetime.datetime.now() - datetime.datetime.fromisoformat(time_received)
+def compare_time(time_sent):
+    # time_sent = time.mktime(time_received.timetuple())
+    time_now = time.time()
+    time_difference = time_now - time_sent
     # print(time_difference)
     # return latency in milliseconds
-    return time_difference.microseconds / 1000
+    return time_difference
 
 
 def exiting(received, dropped):
     print('Exiting.  \n'
           'Recieved       : {} Packets\n'
           'Dropped        : {} Packets\n'
-          'Latency Min    : {}ms\n'
+          'Latency Min    : {:.3f}ms\n'
           'Latency Average: {:.3f}ms\n'
-          'Latency Max    : {}ms\n'
+          'Latency Max    : {:.3f}ms\n'
           'Jitter         : {:.3f}ms'.format(received,
                                              dropped,
                                              latency.low,

@@ -23,10 +23,10 @@ def poll_loop(counter, mcast_grp, mcast_port, ttl, padding):
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
     sock.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, ttl)
     padding = base64.b64encode(os.urandom(padding)).decode('utf-8')[:padding]
-    now = datetime.datetime.utcnow().isoformat()
+    now = time.time()
     data = json.dumps([counter, now, padding])
     sock.sendto(data.encode('utf-8'), (mcast_grp, mcast_port))
-    print(data)
+    print(data, end='\r')
 
 
 def main():
